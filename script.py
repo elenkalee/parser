@@ -1,11 +1,10 @@
+from collections import Counter
 from subprocess import run, PIPE
 from datetime import datetime
 import sys
 
 today = datetime.today()
 file_name = today.strftime("%d-%m-%Y-%H:%M")
-stdout = sys.stdout
-sys.stdout = open(f'{file_name}-scan.txt', 'w')
 
 res = run(['ps', 'aux'], stdout=PIPE)
 procs = res.stdout.decode().split('\n')
@@ -32,9 +31,10 @@ for p in procs[1:]:
         cpu += float(chunks[titles.index('%CPU')])
         all_proc_count += 1
 
-        if procs_cpu >= max_cpu or procs_mem >= max_mem:
+        if procs_cpu >= max_cpu:
             max_cpu = procs_cpu
             max_cpu_proc = chunks[titles.index('COMMAND')]
+        elif procs_mem >= max_mem:
             max_mem = procs_mem
             max_mem_proc = chunks[titles.index('COMMAND')]
 
@@ -46,17 +46,21 @@ for p in procs[1:]:
         if chunks[titles.index('USER')] in user_proc:
             user_proc[chunks[titles.index('USER')]] += 1
 
-sys.stdout.write(f'Отчет о состоянии системы:''\n'
-                 f'Пользователи системы: {", ".join(sorted(users))}''\n'
-                 f'Процессов запущено: {all_proc_count}''\n'
-                 f'Пользовательских процессов:''\n')
+report = f"""Отчет о состоянии системы:
+Пользователи системы: {", ".join(sorted(users))}'
+Процессов запущено: {all_proc_count}
+Пользовательских процессов:
+{dict(Counter(user_proc))}
+Всего памяти используется: {round(mem, 1)}%
+Всего CPU используется: {round(cpu, 1)}%
+Больше всего CPU использует: {max_cpu}% {max_cpu_proc[:20]}
+Больше всего памяти использует: {max_mem}% {max_mem_proc[:20]}
+"""
 
-for key, value in sorted(user_proc.items()): print(key, ':', value)
+print(report)
 
-sys.stdout.write(f'Всего памяти используется: {round(mem, 1)}%''\n'
-                 f'Всего CPU используется: {round(cpu, 1)}%''\n'
-                 f'Больше всего CPU использует: {max_cpu}% {max_cpu_proc[:20]}''\n'
-                 f'Больше всего памяти использует: {max_mem}% {max_mem_proc[:20]}')
-
+stdout = sys.stdout
+sys.stdout = open(f'{file_name}-scan.txt', 'w')
+sys.stdout.write(report)
 sys.stdout.close()
 sys.stdout = stdout

@@ -34,7 +34,7 @@ for p in procs[1:]:
         if procs_cpu >= max_cpu:
             max_cpu = procs_cpu
             max_cpu_proc = chunks[titles.index('COMMAND')]
-        elif procs_mem >= max_mem:
+        if procs_mem >= max_mem:
             max_mem = procs_mem
             max_mem_proc = chunks[titles.index('COMMAND')]
 

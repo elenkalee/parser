@@ -5,7 +5,7 @@ import re
 from collections import defaultdict
 
 
-def parse_log_file(file_path):
+def log_file_parsing(file_path):
     dict_ip = {"TOTAL": 0, "METHOD": {"GET": 0, "POST": 0, "PUT": 0, "DELETE": 0, "HEAD": 0, "OPTIONS": 0}}
     dict_ip_requests = defaultdict(lambda: {"REQUESTS_COUNT": 0})
     list_ip_duration = []
@@ -47,23 +47,23 @@ def parse_log_file(file_path):
         with open(f"{file_path}.json", "w", encoding="utf-8") as file:
             result = json.dumps(result, indent=4)
             file.write(result)
-            print(result)
+            print(file_path, result)
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Process access.log')
-    parser.add_argument('-l', dest='log', action='store', help='Path to logfile')
+    parser = argparse.ArgumentParser(description='Process parsing logs')
+    parser.add_argument('-l', dest='log', action='store', help='Path to log file or directory')
     args = parser.parse_args()
 
     if args.log is not None:
         if os.path.isfile(args.log):
-            parse_log_file(file_path=args.log)
+            log_file_parsing(file_path=args.log)
 
         elif os.path.isdir(args.log):
             for file in os.listdir(args.log):
                 if file.endswith(".log"):
                     path_to_logfile = os.path.join(args.log, file)
-                    parse_log_file(file_path=path_to_logfile)
+                    log_file_parsing(file_path=path_to_logfile)
 
         else:
-            print("ERROR: Wrong path to file")
+            print("ERROR: Wrong path to file or directory")

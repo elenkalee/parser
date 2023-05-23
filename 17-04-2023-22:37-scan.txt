@@ -1,0 +1,9 @@
+Отчет о состоянии системы:
+Пользователи системы: _analyticsd, _appleevents, _applepay, _assetcache, _atsserver, _captiveagent, _cmiodalassistants, _coreaudiod, _ctkd, _datadetectors, _displaypolicyd, _distnote, _driverkit, _fpsd, _gamecontrollerd, _hidd, _iconservices, _installcoordinationd, _locationd, _mdnsresponder, _netbios, _networkd, _nsurlsessiond, _reportmemoryexception, _securityagent, _softwareupdate, _spotlight, _timed, _trustd, _usbmuxd, _windowserver, elenalee, root'
+Процессов запущено: 443
+Пользовательских процессов:
+{'_windowserver': 2, '_displaypolicyd': 1, '_fpsd': 3, '_spotlight': 5, '_reportmemoryexception': 1, '_cmiodalassistants': 1, '_gamecontrollerd': 1, '_securityagent': 1, '_distnote': 1, '_timed': 1, '_appleevents': 2, '_applepay': 1, '_captiveagent': 1, '_nsurlsessiond': 3, '_softwareupdate': 3, 'elenalee': 251, '_datadetectors': 1, '_ctkd': 1, '_iconservices': 1, '_driverkit': 4, '_locationd': 7, '_netbios': 1, '_hidd': 1, 'root': 135, '_usbmuxd': 1, '_analyticsd': 1, '_trustd': 1, '_assetcache': 3, '_coreaudiod': 4, '_mdnsresponder': 1, '_installcoordinationd': 1, '_atsserver': 1, '_networkd': 1}
+Всего памяти используется: 67.3%
+Всего CPU используется: 120.4%
+Больше всего CPU использует: 80.0% /Applications/PyChar
+Больше всего памяти использует: 3.1% /Applications/Google
